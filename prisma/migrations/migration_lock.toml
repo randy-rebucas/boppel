@@ -1,0 +1,17 @@
+{
+  "version": "3",
+  "migrationEngine": {
+    "name": "migration-engine",
+    "version": "5.19.1"
+  },
+  "queryEngine": {
+    "name": "query-engine",
+    "version": "5.19.1"
+  },
+  "binaryTargets": [
+    {
+      "from": "native",
+      "to": "windows"
+    }
+  ]
+}

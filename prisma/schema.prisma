@@ -1,0 +1,258 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum AppRole {
+  buyer
+  seller
+  admin
+}
+
+enum ProductType {
+  physical
+  digital
+  ticket
+}
+
+enum SubscriptionTier {
+  starter
+  maker
+  pro_maker
+  collective
+}
+
+enum SellerType {
+  physical
+  digital
+  both
+}
+
+enum OrderStatus {
+  pending
+  processing
+  shipped
+  delivered
+  cancelled
+}
+
+enum CollaborationStatus {
+  pending
+  accepted
+  active
+  completed
+  declined
+}
+
+enum ApplicationStatus {
+  pending
+  approved
+  rejected
+}
+
+// Models
+model Profile {
+  id               String           @id @default(uuid())
+  name             String?
+  email            String?          @unique
+  password         String?          // Added for authentication
+  avatarUrl        String?          @map("avatar_url")
+  bio              String?
+  isVerified       Boolean          @default(false) @map("is_verified")
+  badges           String[]         @default([])
+  sellerType       SellerType?      @map("seller_type")
+  subscriptionTier SubscriptionTier @default(starter) @map("subscription_tier")
+  country          String?
+  region           String?
+  city             String?
+  showCity         Boolean          @default(false) @map("show_city")
+  createdAt        DateTime         @default(now()) @map("created_at")
+  updatedAt        DateTime         @updatedAt @map("updated_at")
+
+  // Relations
+  userRoles        UserRole[]
+  products         Product[]
+  ordersAsBuyer    Order[]          @relation("BuyerOrders")
+  ordersAsSeller   Order[]          @relation("SellerOrders")
+  reviewsAsReviewer Review[]        @relation("ReviewerReviews")
+  reviewsAsReviewee Review[]        @relation("RevieweeReviews")
+  collabScores     CollabScore?
+  marketsAsHost    Market[]         @relation("HostMarkets")
+  marketParticipants MarketParticipant[]
+  collaborationsAsProposer Collaboration[] @relation("ProposerCollaborations")
+  collaborationsAsPartner Collaboration[] @relation("PartnerCollaborations")
+
+  @@map("profiles")
+}
+
+model UserRole {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  role      AppRole
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  profile   Profile  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, role])
+  @@map("user_roles")
+}
+
+model Product {
+  id                  String      @id @default(uuid())
+  sellerId            String      @map("seller_id")
+  title               String
+  description         String?
+  price               Decimal     @db.Decimal(10, 2)
+  images              String[]
+  category            String?
+  isActive            Boolean     @default(true) @map("is_active")
+  stockQuantity       Int?        @default(0) @map("stock_quantity")
+  productType         ProductType @default(physical) @map("product_type")
+  customisationFields Json?       @default("[]") @map("customisation_fields")
+  createdAt           DateTime    @default(now()) @map("created_at")
+  updatedAt           DateTime    @updatedAt @map("updated_at")
+
+  // Relations
+  seller              Profile     @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  orders              Order[]
+  reviews             Review[]
+
+  @@map("products")
+}
+
+model Order {
+  id                String      @id @default(uuid())
+  buyerId           String?     @map("buyer_id")
+  sellerId          String      @map("seller_id")
+  productId         String?     @map("product_id")
+  quantity          Int         @default(1)
+  totalAmount       Decimal     @db.Decimal(10, 2) @map("total_amount")
+  status            OrderStatus @default(pending)
+  customisationData Json?       @map("customisation_data")
+  shippingAddress   String?     @map("shipping_address")
+  createdAt         DateTime    @default(now()) @map("created_at")
+  updatedAt         DateTime    @updatedAt @map("updated_at")
+
+  // Relations
+  buyer             Profile?    @relation("BuyerOrders", fields: [buyerId], references: [id], onDelete: SetNull)
+  seller            Profile     @relation("SellerOrders", fields: [sellerId], references: [id], onDelete: Cascade)
+  product           Product?    @relation(fields: [productId], references: [id], onDelete: SetNull)
+  reviews           Review[]
+
+  @@map("orders")
+}
+
+model Review {
+  id               String   @id @default(uuid())
+  reviewerId       String   @map("reviewer_id")
+  revieweeId       String   @map("reviewee_id")
+  productId        String?  @map("product_id")
+  orderId          String?  @map("order_id")
+  rating           Int
+  comment          String?
+  verifiedPurchase Boolean  @default(false) @map("verified_purchase")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  // Relations
+  reviewer         Profile  @relation("ReviewerReviews", fields: [reviewerId], references: [id], onDelete: Cascade)
+  reviewee         Profile  @relation("RevieweeReviews", fields: [revieweeId], references: [id], onDelete: Cascade)
+  product          Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  order            Order?   @relation(fields: [orderId], references: [id], onDelete: SetNull)
+
+  @@map("reviews")
+}
+
+model CollabScore {
+  userId           String   @id @map("user_id")
+  totalPoints      Int      @default(0) @map("total_points")
+  currentRank      Int?     @map("current_rank")
+  completedCollabs Int      @default(0) @map("completed_collabs")
+  coHostedEvents   Int      @default(0) @map("co_hosted_events")
+  createdBundles   Int      @default(0) @map("created_bundles")
+  positiveReviews  Int      @default(0) @map("positive_reviews")
+  averageRating    Decimal? @db.Decimal(3, 2) @default(0) @map("average_rating")
+  badgesEarned     String[] @default([]) @map("badges_earned")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  profile          Profile  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("collab_scores")
+}
+
+model Market {
+  id                String   @id @default(uuid())
+  hostId            String   @map("host_id")
+  title             String
+  description       String?
+  eventType         String?  @map("event_type")
+  startDate         DateTime @map("start_date")
+  endDate           DateTime @map("end_date")
+  location          String?
+  maxParticipants   Int?     @map("max_participants")
+  participationFee  Decimal? @db.Decimal(10, 2) @default(0) @map("participation_fee")
+  createdAt         DateTime @default(now()) @map("created_at")
+
+  // Relations
+  host              Profile  @relation("HostMarkets", fields: [hostId], references: [id], onDelete: Cascade)
+  participants      MarketParticipant[]
+
+  @@map("markets")
+}
+
+model MarketParticipant {
+  id                String            @id @default(uuid())
+  marketId          String            @map("market_id")
+  sellerId          String            @map("seller_id")
+  applicationStatus ApplicationStatus @default(pending) @map("application_status")
+  stallNumber       String?           @map("stall_number")
+  applicationData   Json?             @map("application_data")
+  appliedAt         DateTime          @default(now()) @map("applied_at")
+
+  // Relations
+  market            Market            @relation(fields: [marketId], references: [id], onDelete: Cascade)
+  seller            Profile           @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+
+  @@unique([marketId, sellerId])
+  @@map("market_participants")
+}
+
+model Collaboration {
+  id                String              @id @default(uuid())
+  proposerId        String              @map("proposer_id")
+  partnerId         String              @map("partner_id")
+  collaborationType String              @map("collaboration_type")
+  title             String
+  description       String?
+  status            CollaborationStatus @default(pending)
+  createdAt         DateTime            @default(now()) @map("created_at")
+  updatedAt         DateTime            @updatedAt @map("updated_at")
+
+  // Relations
+  proposer          Profile             @relation("ProposerCollaborations", fields: [proposerId], references: [id], onDelete: Cascade)
+  partner           Profile             @relation("PartnerCollaborations", fields: [partnerId], references: [id], onDelete: Cascade)
+
+  @@map("collaborations")
+}
+
+model Waitlist {
+  id          String    @id @default(uuid())
+  firstName   String    @map("first_name")
+  email       String    @unique
+  userType    String    @map("user_type")
+  wantsBeta   Boolean   @default(false) @map("wants_beta")
+  ukLocation  String?   @map("uk_location")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  @@map("waitlist")
+}
