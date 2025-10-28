@@ -3,163 +3,185 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Search, ShoppingCart, User, Heart, Palette, Users, Leaf, Shield } from 'lucide-react';
+import { Menu, X, Search, ShoppingCart, Heart } from 'lucide-react';
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  const navigation = [
-    { name: 'Explore', href: '/explore', icon: Search },
-    { name: 'Community', href: '/community', icon: Users },
-    { name: 'Sustainability', href: '/sustainability', icon: Leaf },
-    { name: 'Trust & Safety', href: '/trust-and-safety', icon: Shield },
+  const primaryNavigation = [
+    { name: 'Explore', href: '/explore' },
+    { name: 'Makers', href: '/community/creators' },
+    { name: 'Sell', href: '/auth/get-started' },
+    { name: 'About', href: '/about' },
+    { name: 'Help', href: '/help' },
   ];
 
-  const categories = [
-    { name: 'Jewelry & Accessories', href: '/category/jewelry-accessories' },
-    { name: 'Home & Living', href: '/category/home-living' },
-    { name: 'Art & Prints', href: '/category/art-prints' },
-    { name: 'Clothing & Fashion', href: '/category/clothing-fashion' },
-    { name: 'Craft Supplies', href: '/category/craft-supplies' },
-    { name: 'Digital Products', href: '/category/digital-products' },
-    { name: 'Workshops & Events', href: '/category/workshops-events' },
+  const secondaryNavigation = [
+    { name: 'Creators', href: '/community/creators' },
+    { name: 'New In', href: '/explore?filter=new' },
+    { name: 'Fully Handmade', href: '/explore?filter=handmade' },
+    { name: 'Personalised & Custom', href: '/explore?filter=custom' },
+    { name: 'Prints & Reproductions', href: '/explore?filter=prints' },
+    { name: 'Digital Downloads', href: '/explore?filter=digital' },
+    { name: 'Vintage & Curated', href: '/explore?filter=vintage' },
+    { name: 'Gifts', href: '/explore?filter=gifts' },
   ];
+
+  const filterOptions = {
+    byRecipient: [
+      { name: 'For Her', href: '/explore?recipient=her' },
+      { name: 'For Him', href: '/explore?recipient=him' },
+      { name: 'For Kids', href: '/explore?recipient=kids' },
+      { name: 'For Home', href: '/explore?recipient=home' },
+    ],
+    byOccasion: [
+      { name: 'Birthday', href: '/explore?occasion=birthday' },
+      { name: 'Wedding', href: '/explore?occasion=wedding' },
+      { name: 'Anniversary', href: '/explore?occasion=anniversary' },
+      { name: 'By Price', href: '/explore?sort=price' },
+    ],
+  };
 
   const isActive = (href: string) => pathname === href;
 
   return (
-    <nav className="sticky top-0 z-50 bg-surface-primary/95 backdrop-blur-sm border-b border-border-primary">
+    <nav className="sticky top-0 z-50 bg-background-primary/95 backdrop-blur-md border-b border-border-primary shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        {/* Main Navigation Bar */}
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-brand rounded-lg flex items-center justify-center">
-                <Palette className="w-5 h-5 text-text-inverse" />
-              </div>
-              <span className="text-xl font-bold text-text-primary">Boppel</span>
+            <Link href="/" className="text-3xl font-bold text-text-primary font-display hover:text-brand-primary transition-colors duration-300">
+              BOPPEL ATELIER
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex lg:items-center lg:space-x-8">
-            {navigation.map((item) => (
+          {/* Primary Navigation - Centered */}
+          <div className="hidden lg:flex lg:items-center lg:space-x-10">
+            {primaryNavigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`text-base font-medium transition-all duration-300 font-body ${
                   isActive(item.href)
-                    ? 'text-brand-primary bg-brand-primary/10'
-                    : 'text-text-secondary hover:text-text-primary hover:bg-surface-secondary'
+                    ? 'text-brand-primary border-b-2 border-brand-primary pb-1'
+                    : 'text-text-primary hover:text-brand-primary hover:border-b-2 hover:border-brand-primary/50 pb-1'
                 }`}
               >
-                <item.icon className="w-4 h-4" />
-                <span>{item.name}</span>
+                {item.name}
               </Link>
             ))}
           </div>
 
-          {/* Desktop Actions */}
-          <div className="hidden lg:flex lg:items-center lg:space-x-4">
-            <button className="p-2 text-text-secondary hover:text-text-primary hover:bg-surface-secondary rounded-lg transition-colors">
-              <Search className="w-5 h-5" />
+          {/* Utility Icons - Right side */}
+          <div className="hidden lg:flex lg:items-center lg:space-x-6">
+            <button className="p-3 text-text-primary hover:text-brand-primary transition-all duration-300 hover:bg-brand-primary/10 rounded-xl">
+              <Search className="w-6 h-6" />
             </button>
-            <button className="p-2 text-text-secondary hover:text-text-primary hover:bg-surface-secondary rounded-lg transition-colors relative">
-              <ShoppingCart className="w-5 h-5" />
-              <span className="absolute -top-1 -right-1 bg-brand-primary text-text-inverse text-xs rounded-full w-5 h-5 flex items-center justify-center">
+            <button className="p-3 text-text-primary hover:text-brand-primary transition-all duration-300 hover:bg-brand-primary/10 rounded-xl">
+              <Heart className="w-6 h-6" />
+            </button>
+            <button className="p-3 text-text-primary hover:text-brand-primary transition-all duration-400 hover:bg-brand-primary/10 rounded-xl relative">
+              <ShoppingCart className="w-6 h-6" />
+              <span className="absolute -top-1 -right-1 bg-brand-primary text-text-inverse text-xs rounded-full w-6 h-6 flex items-center justify-center font-medium">
                 0
               </span>
             </button>
-            <button className="p-2 text-text-secondary hover:text-text-primary hover:bg-surface-secondary rounded-lg transition-colors">
-              <Heart className="w-5 h-5" />
-            </button>
-            <Link
-              href="/auth/sign-in"
-              className="btn-base bg-interactive-primary text-text-inverse hover:bg-interactive-primary-hover"
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/auth/sign-up"
-              className="btn-base border border-border-primary text-text-primary hover:bg-surface-secondary"
-            >
-              Sign Up
-            </Link>
           </div>
 
           {/* Mobile menu button */}
           <div className="lg:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-text-secondary hover:text-text-primary hover:bg-surface-secondary rounded-lg transition-colors"
+              className="p-3 text-text-primary hover:text-brand-primary transition-all duration-400 hover:bg-brand-primary/10 rounded-xl"
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="lg:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-surface-primary border-t border-border-primary">
-              {navigation.map((item) => (
+        {/* Secondary Navigation - Categories */}
+        <div className="hidden lg:block border-t border-border-primary bg-gradient-to-r from-background-primary to-background-secondary">
+          <div className="flex items-center justify-center space-x-10 py-6">
+            {secondaryNavigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="text-sm text-text-primary hover:text-brand-primary transition-all duration-300 font-body hover:border-b hover:border-brand-primary/50 pb-1"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Filter Options */}
+        <div className="hidden lg:block border-t border-border-primary bg-gradient-to-r from-background-secondary to-background-primary">
+          <div className="flex items-center justify-center space-x-16 py-4">
+            <div className="flex items-center space-x-8">
+              <span className="text-sm text-text-tertiary font-medium font-body uppercase tracking-wider">BY RECIPIENT:</span>
+              {filterOptions.byRecipient.map((option) => (
                 <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-base font-medium transition-colors ${
-                    isActive(item.href)
-                      ? 'text-brand-primary bg-brand-primary/10'
-                      : 'text-text-secondary hover:text-text-primary hover:bg-surface-secondary'
-                  }`}
-                  onClick={() => setIsMenuOpen(false)}
+                  key={option.name}
+                  href={option.href}
+                  className="text-sm text-text-tertiary hover:text-text-primary transition-all duration-300 font-body hover:border-b hover:border-brand-primary/50 pb-1"
                 >
-                  <item.icon className="w-5 h-5" />
-                  <span>{item.name}</span>
+                  {option.name}
                 </Link>
               ))}
-              <div className="pt-4 border-t border-border-primary">
-                <Link
-                  href="/auth/sign-in"
-                  className="block w-full btn-base bg-interactive-primary text-text-inverse hover:bg-interactive-primary-hover mb-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Sign In
-                </Link>
-                <Link
-                  href="/auth/sign-up"
-                  className="block w-full btn-base border border-border-primary text-text-primary hover:bg-surface-secondary"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Sign Up
-                </Link>
-              </div>
             </div>
-          </div>
-        )}
-      </div>
-
-      {/* Mega Menu for Categories */}
-      {isMegaMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-surface-elevated border-b border-border-primary shadow-lg">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {categories.map((category) => (
+            <div className="flex items-center space-x-8">
+              <span className="text-sm text-text-tertiary font-medium font-body uppercase tracking-wider">BY OCCASION:</span>
+              {filterOptions.byOccasion.map((option) => (
                 <Link
-                  key={category.name}
-                  href={category.href}
-                  className="group p-4 rounded-lg hover:bg-surface-secondary transition-colors"
+                  key={option.name}
+                  href={option.href}
+                  className="text-sm text-text-tertiary hover:text-text-primary transition-all duration-300 font-body hover:border-b hover:border-brand-primary/50 pb-1"
                 >
-                  <h3 className="font-medium text-text-primary group-hover:text-brand-primary transition-colors">
-                    {category.name}
-                  </h3>
+                  {option.name}
                 </Link>
               ))}
             </div>
           </div>
         </div>
-      )}
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="lg:hidden border-t border-border-primary bg-gradient-to-b from-background-primary to-background-secondary">
+            <div className="px-4 pt-4 pb-6 space-y-2">
+              {primaryNavigation.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`block px-4 py-3 text-base font-medium transition-all duration-300 font-body rounded-xl ${
+                    isActive(item.href)
+                      ? 'text-brand-primary bg-brand-primary/10'
+                      : 'text-text-primary hover:text-brand-primary hover:bg-brand-primary/5'
+                  }`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              ))}
+              <div className="pt-6 border-t border-border-primary">
+                <div className="space-y-2">
+                  {secondaryNavigation.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className="block px-4 py-2 text-sm text-text-secondary hover:text-text-primary transition-all duration-300 font-body hover:bg-brand-primary/5 rounded-lg"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </nav>
   );
 }

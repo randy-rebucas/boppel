@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Palette, Users, Leaf, Shield, Star, Heart, ShoppingBag, TrendingUp, Globe } from 'lucide-react';
+import { Search, Heart, ShoppingCart, Tag, Link as LinkIcon, Shield, Star, Sparkles, CheckCircle, Circle } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 
 export default function Home() {
@@ -8,287 +8,339 @@ export default function Home() {
     <div className="min-h-screen bg-background-primary">
       <Navigation />
       
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-hero">
-        <div className="absolute inset-0 bg-background-overlay"></div>
+      {/* Hero Section - BOPPEL ATELIER */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-background-primary via-background-secondary to-background-tertiary">
+        {/* Elegant gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/5 via-brand-secondary/5 to-brand-accent/5"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-background-primary/80 via-transparent to-transparent"></div>
+        
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-text-inverse mb-6 text-balance">
-              Where Artisans
-              <span className="block text-brand-accent">Thrive & Create</span>
+          <div className="max-w-5xl">
+            <h2 className="text-sm font-medium text-text-tertiary uppercase tracking-wider mb-6 font-body">
+              BOPPEL ATELIER
+            </h2>
+            <h1 className="text-display-2xl text-text-primary mb-8 leading-tight">
+              Where Craftsmanship Meets Elegance
             </h1>
-            <p className="text-xl md:text-2xl text-text-inverse/90 mb-8 max-w-3xl mx-auto text-pretty">
-              Discover unique handcrafted treasures, connect with talented creators, and build a sustainable creative business on the world's most comprehensive artisan marketplace.
+            <p className="text-body-lg text-text-secondary mb-10 max-w-3xl leading-relaxed">
+              A sophisticated marketplace celebrating authentic artisans and their exceptional creations. 
+              No commissions, no copycats—just genuine makers and their masterpieces.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/explore"
-                className="btn-base bg-text-inverse text-text-primary hover:bg-text-inverse/90 text-lg px-8 py-4"
-              >
-                Explore Marketplace
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Link>
+            <div className="flex flex-col sm:flex-row gap-6">
               <Link
                 href="/auth/get-started"
-                className="btn-base border-2 border-text-inverse text-text-inverse hover:bg-text-inverse hover:text-text-primary text-lg px-8 py-4"
+                className="btn-elegant text-lg"
               >
-                Start Selling
+                Join as Artisan
+              </Link>
+              <Link
+                href="/explore"
+                className="btn-secondary text-lg"
+              >
+                Discover Handcrafted Treasures
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-24 bg-background-secondary">
+      {/* Why Choose Boppel Atelier Section */}
+      <section className="py-24 bg-gradient-to-b from-background-primary to-background-secondary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-4">
-              More Than a Marketplace
+          <div className="text-center mb-20">
+            <h2 className="text-display-xl text-text-primary mb-6">
+              Why Choose Boppel Atelier
             </h2>
-            <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-              Boppel is a complete ecosystem for creative entrepreneurs, offering tools, community, and opportunities beyond traditional e-commerce.
+            <p className="text-body-lg text-text-secondary max-w-3xl mx-auto">
+              Experience the difference of a marketplace built for discerning collectors and passionate artisans.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="card-base text-center group hover:shadow-elevated transition-all duration-300">
-              <div className="w-16 h-16 bg-brand-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-brand-primary/20 transition-colors">
-                <Palette className="w-8 h-8 text-brand-primary" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="card-sophisticated text-center group">
+              <div className="w-20 h-20 bg-gradient-to-br from-brand-primary/10 to-brand-accent/10 rounded-full flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300">
+                <Tag className="w-10 h-10 text-brand-primary" />
               </div>
-              <h3 className="text-xl font-semibold text-text-primary mb-3">Creative Tools</h3>
-              <p className="text-text-secondary">
-                Comprehensive business management tools designed specifically for artisans and creators.
+              <h3 className="text-display-sm text-text-primary mb-6">Authentic Artisans Only</h3>
+              <p className="text-body-md text-text-secondary leading-relaxed">
+                Every creator is carefully vetted and verified. No mass-produced items or copycats—just genuine artisans crafting exceptional pieces with passion and skill.
               </p>
             </div>
 
-            <div className="card-base text-center group hover:shadow-elevated transition-all duration-300">
-              <div className="w-16 h-16 bg-brand-secondary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-brand-secondary/20 transition-colors">
-                <Users className="w-8 h-8 text-brand-secondary" />
+            <div className="card-sophisticated text-center group">
+              <div className="w-20 h-20 bg-gradient-to-br from-brand-secondary/10 to-brand-primary/10 rounded-full flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300">
+                <LinkIcon className="w-10 h-10 text-brand-secondary" />
               </div>
-              <h3 className="text-xl font-semibold text-text-primary mb-3">Vibrant Community</h3>
-              <p className="text-text-secondary">
-                Connect with fellow creators, share knowledge, and collaborate on exciting projects.
+              <h3 className="text-display-sm text-text-primary mb-6">Direct from the Maker</h3>
+              <p className="text-body-md text-text-secondary leading-relaxed">
+                Connect directly with the artisans who create your treasures. No middlemen, no hidden markups—your purchase directly supports the artist's craft.
               </p>
             </div>
 
-            <div className="card-base text-center group hover:shadow-elevated transition-all duration-300">
-              <div className="w-16 h-16 bg-status-success/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-status-success/20 transition-colors">
-                <Leaf className="w-8 h-8 text-status-success" />
+            <div className="card-sophisticated text-center group">
+              <div className="w-20 h-20 bg-gradient-to-br from-brand-accent/10 to-brand-secondary/10 rounded-full flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300">
+                <Shield className="w-10 h-10 text-brand-accent" />
               </div>
-              <h3 className="text-xl font-semibold text-text-primary mb-3">Sustainability Focus</h3>
-              <p className="text-text-secondary">
-                Craft swaps, CO₂ tracking, and eco-friendly practices for conscious creators.
-              </p>
-            </div>
-
-            <div className="card-base text-center group hover:shadow-elevated transition-all duration-300">
-              <div className="w-16 h-16 bg-status-info/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-status-info/20 transition-colors">
-                <Shield className="w-8 h-8 text-status-info" />
-              </div>
-              <h3 className="text-xl font-semibold text-text-primary mb-3">Trust & Safety</h3>
-              <p className="text-text-secondary">
-                Verified sellers, purchase protection, and transparent craftsmanship verification.
+              <h3 className="text-display-sm text-text-primary mb-6">Excellence Guaranteed</h3>
+              <p className="text-body-md text-text-secondary leading-relaxed">
+                Every piece is crafted with meticulous attention to detail and uncompromising quality standards. We stand behind the excellence of every creation.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-24 bg-surface-primary">
+      {/* Built by Artisans Section */}
+      <section className="py-24 bg-gradient-to-b from-background-secondary to-background-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-4xl md:text-5xl font-bold text-brand-primary mb-2">10K+</div>
-              <div className="text-text-secondary">Active Creators</div>
-            </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold text-brand-primary mb-2">50K+</div>
-              <div className="text-text-secondary">Unique Products</div>
-            </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold text-brand-primary mb-2">100K+</div>
-              <div className="text-text-secondary">Happy Customers</div>
-            </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold text-brand-primary mb-2">£2M+</div>
-              <div className="text-text-secondary">Creator Earnings</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Products Preview */}
-      <section className="py-24 bg-background-secondary">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-4">
-              Discover Amazing Creations
+          <div className="text-center mb-20">
+            <h2 className="text-display-xl text-text-primary mb-6">
+              Built by Artisans, for Artisans
             </h2>
-            <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-              From handcrafted jewelry to unique home decor, find something special that speaks to you.
+            <p className="text-body-lg text-text-secondary max-w-4xl mx-auto leading-relaxed">
+              We understand the passion and dedication that goes into creating exceptional work. That's why we built Boppel Atelier to celebrate and support the artisanal community.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="card-base group hover:shadow-elevated transition-all duration-300">
-                <div className="aspect-square bg-surface-secondary rounded-lg mb-4 flex items-center justify-center">
-                  <Palette className="w-16 h-16 text-text-tertiary" />
-                </div>
-                <h3 className="font-semibold text-text-primary mb-2">Featured Product {item}</h3>
-                <p className="text-text-secondary text-sm mb-4">
-                  Beautiful handcrafted item with attention to detail and sustainable materials.
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div>
+              <h3 className="text-display-lg text-text-primary mb-8">Keep What You Create</h3>
+              <p className="text-body-md text-text-secondary mb-8 leading-relaxed">
+                On Boppel Atelier, you keep 100% of your earnings. No hidden fees, no surprise charges. What you create with your hands and heart, you keep. It's that simple.
+              </p>
+              <p className="text-body-md text-text-secondary mb-8 leading-relaxed">
+                We believe in fair compensation for artisans and fair prices for collectors. Our platform is designed to support sustainable creative businesses and preserve traditional craftsmanship.
+              </p>
+              <div className="card-base bg-gradient-to-r from-brand-primary/5 to-brand-accent/5 border-brand-primary/20 mb-10">
+                <p className="text-body-sm text-text-secondary leading-relaxed">
+                  A typical sale on other platforms can lose between 10-20% in fees. On Boppel Atelier, that difference stays with you, supporting your craft and passion.
                 </p>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-1">
-                    <Star className="w-4 h-4 text-brand-accent fill-current" />
-                    <span className="text-sm text-text-secondary">4.9 (128 reviews)</span>
-                  </div>
-                  <span className="font-semibold text-text-primary">£45</span>
-                </div>
               </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Link
-              href="/explore"
-              className="btn-base bg-interactive-primary text-text-inverse hover:bg-interactive-primary-hover text-lg px-8 py-4"
-            >
-              View All Products
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Link>
+              <div className="flex flex-col sm:flex-row gap-6">
+                <Link
+                  href="/platform/keep-more"
+                  className="btn-elegant"
+                >
+                  Discover Our Philosophy
+                </Link>
+                <Link
+                  href="/auth/get-started"
+                  className="btn-secondary"
+                >
+                  Join the Atelier
+                </Link>
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="w-40 h-40 bg-gradient-to-br from-brand-primary/10 via-brand-secondary/10 to-brand-accent/10 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse-soft">
+                <Heart className="w-20 h-20 text-brand-primary" />
+              </div>
+              <p className="text-display-sm text-text-primary font-medium">Where passion meets purpose</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Creator Success Stories */}
-      <section className="py-24 bg-surface-primary">
+      {/* How Boppel Works Section */}
+      <section className="py-24 bg-background-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-4">
-              Creator Success Stories
+            <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-8">
+              How Boppel Works
             </h2>
-            <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-              See how Boppel has helped artisans build thriving businesses and connect with customers worldwide.
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-brand-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Sparkles className="w-8 h-8 text-brand-primary" />
+              </div>
+              <h3 className="text-xl font-bold text-text-primary mb-4">Create or Discover</h3>
+              <p className="text-text-secondary leading-relaxed">
+                Whether you're a creator looking to sell or a buyer seeking unique items, Boppel connects you with authentic handmade and digital creations.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-brand-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle className="w-8 h-8 text-brand-primary" />
+              </div>
+              <h3 className="text-xl font-bold text-text-primary mb-4">Quality Verified</h3>
+              <p className="text-text-secondary leading-relaxed">
+                Every creator and product is carefully vetted to ensure authenticity and quality. We maintain high standards for our community.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-brand-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Heart className="w-8 h-8 text-brand-primary" />
+              </div>
+              <h3 className="text-xl font-bold text-text-primary mb-4">Support Creators</h3>
+              <p className="text-text-secondary leading-relaxed">
+                When you buy on Boppel, you're directly supporting the artist. No middlemen, no hidden fees - just fair compensation for creators.
+              </p>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/platform/keep-more"
+                className="btn-primary"
+              >
+                See How It Works
+              </Link>
+              <Link
+                href="/community"
+                className="btn-secondary"
+              >
+                Join the Community
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Artisans Section */}
+      <section className="py-24 bg-gradient-to-b from-background-primary to-background-secondary">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h3 className="text-sm font-medium text-text-tertiary uppercase tracking-wider mb-6 font-body">
+              ARTISAN COLLECTIVE
+            </h3>
+            <h2 className="text-display-xl text-text-primary mb-6">
+              Featured Artisans
+            </h2>
+            <p className="text-body-lg text-text-secondary max-w-3xl mx-auto">
+              Discover exceptional craftspeople who bring artistry, intention, and mastery to every creation.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="card-base">
-              <div className="flex items-center mb-6">
-                <div className="w-16 h-16 bg-brand-primary/10 rounded-full flex items-center justify-center mr-4">
-                  <Users className="w-8 h-8 text-brand-primary" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-text-primary">Sarah's Jewelry Studio</h3>
-                  <p className="text-text-secondary">Handcrafted Silver Jewelry</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div className="card-sophisticated group hover:shadow-elevated transition-all duration-300">
+              <div className="aspect-square bg-gradient-to-br from-brand-primary/10 via-brand-secondary/10 to-brand-accent/10 rounded-xl mb-6 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                <div className="w-28 h-28 bg-gradient-to-br from-brand-primary/20 to-brand-accent/20 rounded-full flex items-center justify-center">
+                  <Circle className="w-14 h-14 text-brand-primary" />
                 </div>
               </div>
-              <blockquote className="text-text-secondary italic mb-4">
-                "Boppel gave me the tools to turn my passion into a thriving business. The community support and business insights have been invaluable."
-              </blockquote>
-              <div className="flex items-center text-sm text-text-tertiary">
-                <TrendingUp className="w-4 h-4 mr-2" />
-                <span>300% increase in sales in 6 months</span>
+              <div className="text-xs font-medium text-text-tertiary uppercase tracking-wider mb-3 font-body">
+                CERAMICS & POTTERY
               </div>
+              <h3 className="text-display-sm text-text-primary mb-4">Elena Stone</h3>
+              <p className="text-body-sm text-text-secondary leading-relaxed">
+                Hand-thrown ceramics inspired by nature's organic forms, each piece a unique testament to traditional pottery techniques and contemporary design.
+              </p>
             </div>
 
-            <div className="card-base">
-              <div className="flex items-center mb-6">
-                <div className="w-16 h-16 bg-brand-secondary/10 rounded-full flex items-center justify-center mr-4">
-                  <Globe className="w-8 h-8 text-brand-secondary" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-text-primary">Mike's Woodcraft</h3>
-                  <p className="text-text-secondary">Sustainable Wood Products</p>
+            <div className="card-sophisticated group hover:shadow-elevated transition-all duration-300">
+              <div className="aspect-square bg-gradient-to-br from-brand-secondary/10 via-brand-accent/10 to-brand-primary/10 rounded-xl mb-6 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                <div className="w-28 h-28 bg-gradient-to-br from-brand-secondary/20 to-brand-primary/20 rounded-full flex items-center justify-center">
+                  <Circle className="w-14 h-14 text-brand-secondary" />
                 </div>
               </div>
-              <blockquote className="text-text-secondary italic mb-4">
-                "The sustainability features and craft swap program helped me reduce waste and connect with like-minded creators."
-              </blockquote>
-              <div className="flex items-center text-sm text-text-tertiary">
-                <Leaf className="w-4 h-4 mr-2" />
-                <span>50% reduction in material waste</span>
+              <div className="text-xs font-medium text-text-tertiary uppercase tracking-wider mb-3 font-body">
+                TEXTILES & WEAVING
               </div>
+              <h3 className="text-display-sm text-text-primary mb-4">Maria Rodriguez</h3>
+              <p className="text-body-sm text-text-secondary leading-relaxed">
+                Sustainable woven textiles using traditional techniques and eco-friendly materials, creating pieces that honor heritage while embracing modern sensibilities.
+              </p>
+            </div>
+
+            <div className="card-sophisticated group hover:shadow-elevated transition-all duration-300">
+              <div className="aspect-square bg-gradient-to-br from-brand-accent/10 via-brand-primary/10 to-brand-secondary/10 rounded-xl mb-6 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                <div className="w-28 h-28 bg-gradient-to-br from-brand-accent/20 to-brand-secondary/20 rounded-full flex items-center justify-center">
+                  <Circle className="w-14 h-14 text-brand-accent" />
+                </div>
+              </div>
+              <div className="text-xs font-medium text-text-tertiary uppercase tracking-wider mb-3 font-body">
+                LEATHER CRAFT
+              </div>
+              <h3 className="text-display-sm text-text-primary mb-4">James Chen</h3>
+              <p className="text-body-sm text-text-secondary leading-relaxed">
+                Handcrafted leather goods with meticulous attention to detail and timeless design principles, creating heirloom-quality pieces for the discerning collector.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 bg-gradient-brand">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-text-inverse mb-6">
-            Ready to Start Your Creative Journey?
-          </h2>
-          <p className="text-xl text-text-inverse/90 mb-8">
-            Join thousands of creators who are building successful businesses on Boppel.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/auth/get-started"
-              className="btn-base bg-text-inverse text-text-primary hover:bg-text-inverse/90 text-lg px-8 py-4"
-            >
-              Get Started Free
-            </Link>
-            <Link
-              href="/explore"
-              className="btn-base border-2 border-text-inverse text-text-inverse hover:bg-text-inverse hover:text-text-primary text-lg px-8 py-4"
-            >
-              Browse Products
-            </Link>
+      {/* Testimonial Section */}
+      <section className="py-24 bg-gradient-to-b from-background-secondary to-background-primary">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="card-sophisticated bg-gradient-to-r from-brand-primary/5 to-brand-accent/5 border-brand-primary/20">
+            <blockquote className="text-display-md text-text-primary italic leading-relaxed mb-8 font-display">
+              "Boppel Atelier has transformed how I share my craft with the world. No more commission fees eating into my passion, and I love being part of a community that truly values authenticity and artistry."
+            </blockquote>
+            <p className="text-display-sm text-text-primary font-medium">— Sarah, Master Ceramicist</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Closing Statement Section */}
+      <section className="py-24 bg-gradient-to-b from-background-primary to-background-secondary">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="card-sophisticated">
+            <p className="text-display-sm text-text-primary leading-relaxed font-display">
+              Where craftsmanship meets elegance. Where tradition meets innovation. Where every creation tells a story.
+            </p>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-surface-primary border-t border-border-primary">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <footer className="bg-background-primary border-t border-border-primary">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-brand rounded-lg flex items-center justify-center">
-                  <Palette className="w-5 h-5 text-text-inverse" />
-                </div>
-                <span className="text-xl font-bold text-text-primary">Boppel</span>
-              </div>
-              <p className="text-text-secondary">
-                The comprehensive platform for artisan creators and conscious consumers.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-text-primary mb-4">Marketplace</h3>
-              <ul className="space-y-2">
-                <li><Link href="/explore" className="text-text-secondary hover:text-text-primary">Explore Products</Link></li>
-                <li><Link href="/community" className="text-text-secondary hover:text-text-primary">Community</Link></li>
-                <li><Link href="/sustainability" className="text-text-secondary hover:text-text-primary">Sustainability</Link></li>
+              <h3 className="font-bold text-text-primary mb-6 uppercase tracking-wider">BOPPEL</h3>
+              <ul className="space-y-3">
+                <li><Link href="/" className="text-text-secondary hover:text-text-primary">Home</Link></li>
+                <li><Link href="/platform/keep-more" className="text-text-secondary hover:text-text-primary">How It Works</Link></li>
+                <li><Link href="/about" className="text-text-secondary hover:text-text-primary">About Boppel</Link></li>
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold text-text-primary mb-4">For Creators</h3>
-              <ul className="space-y-2">
+              <h3 className="font-bold text-text-primary mb-6 uppercase tracking-wider">EXPLORE</h3>
+              <ul className="space-y-3">
+                <li><Link href="/explore" className="text-text-secondary hover:text-text-primary">All Products</Link></li>
+                <li><Link href="/community/creators" className="text-text-secondary hover:text-text-primary">Creators</Link></li>
+                <li><Link href="/explore" className="text-text-secondary hover:text-text-primary">New In</Link></li>
+                <li><Link href="/explore" className="text-text-secondary hover:text-text-primary">Fully Handmade</Link></li>
+                <li><Link href="/explore" className="text-text-secondary hover:text-text-primary">Personalised & Custom</Link></li>
+                <li><Link href="/explore" className="text-text-secondary hover:text-text-primary">Prints & Reproductions</Link></li>
+                <li><Link href="/explore" className="text-text-secondary hover:text-text-primary">Digital Downloads</Link></li>
+                <li><Link href="/explore" className="text-text-secondary hover:text-text-primary">Vintage & Curated</Link></li>
+                <li><Link href="/explore" className="text-text-secondary hover:text-text-primary">Gifts</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-bold text-text-primary mb-6 uppercase tracking-wider">FOR CREATORS & BUYERS</h3>
+              <ul className="space-y-3">
                 <li><Link href="/auth/get-started" className="text-text-secondary hover:text-text-primary">Start Selling</Link></li>
-                <li><Link href="/seller/dashboard" className="text-text-secondary hover:text-text-primary">Seller Hub</Link></li>
-                <li><Link href="/platform/keep-more" className="text-text-secondary hover:text-text-primary">Keep More Program</Link></li>
+                <li><Link href="/seller/dashboard" className="text-text-secondary hover:text-text-primary">Creator Dashboard</Link></li>
+                <li><Link href="/community" className="text-text-secondary hover:text-text-primary">Community</Link></li>
+                <li><Link href="/shop/cart" className="text-text-secondary hover:text-text-primary">Shopping Cart</Link></li>
+                <li><Link href="/shop/checkout" className="text-text-secondary hover:text-text-primary">Checkout</Link></li>
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold text-text-primary mb-4">Support</h3>
-              <ul className="space-y-2">
+              <h3 className="font-bold text-text-primary mb-6 uppercase tracking-wider">TRUST & TRANSPARENCY</h3>
+              <ul className="space-y-3">
                 <li><Link href="/trust-and-safety" className="text-text-secondary hover:text-text-primary">Trust & Safety</Link></li>
                 <li><Link href="/policies" className="text-text-secondary hover:text-text-primary">Policies</Link></li>
+                <li><Link href="/sustainability" className="text-text-secondary hover:text-text-primary">Sustainability</Link></li>
                 <li><Link href="/contact" className="text-text-secondary hover:text-text-primary">Contact Us</Link></li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-border-primary mt-8 pt-8 text-center text-text-secondary">
-            <p>&copy; 2024 Boppel. All rights reserved.</p>
+          <div className="border-t border-border-primary mt-12 pt-8 text-center">
+            <p className="text-text-tertiary text-sm mb-2">&copy; Boppel 2025 – Built with love for creative lives.</p>
+            <p className="text-text-tertiary text-sm">Boppel is an early-stage creative marketplace built on fairness, authenticity, and community.</p>
           </div>
         </div>
       </footer>
     </div>
   );
 }
+

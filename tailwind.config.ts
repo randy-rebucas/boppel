@@ -76,7 +76,9 @@ module.exports = {
       },
       
       fontFamily: {
-        sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'serif'],
+        body: ['var(--font-body)', 'sans-serif'],
+        sans: ['var(--font-body)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-geist-mono)', 'monospace'],
       },
       
@@ -88,6 +90,7 @@ module.exports = {
         'scale-in': 'scaleIn var(--animation-duration-fast) var(--animation-easing-standard)',
         'bounce-subtle': 'bounceSubtle 2s infinite',
         'pulse-soft': 'pulseSoft 2s infinite',
+        'elegant-hover': 'elegantHover 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
       },
       
       keyframes: {
@@ -118,6 +121,11 @@ module.exports = {
         pulseSoft: {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0.8' },
+        },
+        elegantHover: {
+          '0%': { transform: 'translateY(0) scale(1)', opacity: '1' },
+          '50%': { transform: 'translateY(-2px) scale(1.02)', opacity: '0.95' },
+          '100%': { transform: 'translateY(0) scale(1)', opacity: '1' },
         },
       },
     },
