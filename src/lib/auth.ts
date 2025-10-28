@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { prisma } from './prisma'
+import { createClient } from './supabase/server'
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d'
@@ -41,35 +41,61 @@ export function verifyToken(token: string): { userId: string } | null {
 }
 
 export async function getUserById(id: string): Promise<User | null> {
-  const user = await prisma.profile.findUnique({
-    where: { id },
-    select: {
-      id: true,
-      email: true,
-      name: true,
-      createdAt: true,
-      updatedAt: true,
+  try {
+    const supabase = createClient()
+    const { data: user, error } = await supabase
+      .from('profiles')
+      .select('id, email, name, created_at, updated_at')
+      .eq('id', id)
+      .single()
+
+    if (error || !user) {
+      return null
     }
-  })
-  return user
+
+    return {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      createdAt: new Date(user.created_at),
+      updatedAt: new Date(user.updated_at),
+    }
+  } catch (error) {
+    console.error('Error getting user by ID:', error)
+    return null
+  }
 }
 
 export async function getUserByEmail(email: string): Promise<User | null> {
-  const user = await prisma.profile.findUnique({
-    where: { email },
-    select: {
-      id: true,
-      email: true,
-      name: true,
-      createdAt: true,
-      updatedAt: true,
+  try {
+    const supabase = createClient()
+    const { data: user, error } = await supabase
+      .from('profiles')
+      .select('id, email, name, created_at, updated_at')
+      .eq('email', email)
+      .single()
+
+    if (error || !user) {
+      return null
     }
-  })
-  return user
+
+    return {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      createdAt: new Date(user.created_at),
+      updatedAt: new Date(user.updated_at),
+    }
+  } catch (error) {
+    console.error('Error getting user by email:', error)
+    return null
+  }
 }
 
 export async function createUser(email: string, password: string, name?: string): Promise<AuthResponse> {
   try {
+    const supabase = createClient()
+    
     // Check if user already exists
     const existingUser = await getUserByEmail(email)
     if (existingUser) {
@@ -79,26 +105,58 @@ export async function createUser(email: string, password: string, name?: string)
       }
     }
 
-    // Hash password
-    const hashedPassword = await hashPassword(password)
-
-    // Create user in database
-    const user = await prisma.profile.create({
-      data: {
-        email,
-        name: name || null,
-        password: hashedPassword,
-      },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        createdAt: true,
-        updatedAt: true,
+    // Create user with Supabase Auth
+    const { data: authData, error: authError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          name: name || null,
+        }
       }
     })
 
-    // Generate token
+    if (authError) {
+      return {
+        success: false,
+        message: authError.message
+      }
+    }
+
+    if (!authData.user) {
+      return {
+        success: false,
+        message: 'Failed to create user'
+      }
+    }
+
+    // Create profile record
+    const { error: profileError } = await supabase
+      .from('profiles')
+      .insert({
+        id: authData.user.id,
+        email: authData.user.email,
+        name: name || null,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      })
+
+    if (profileError) {
+      console.error('Error creating profile:', profileError)
+      return {
+        success: false,
+        message: 'Failed to create user profile'
+      }
+    }
+
+    const user = {
+      id: authData.user.id,
+      email: authData.user.email,
+      name: name || null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
+
     const token = generateToken(user.id)
 
     return {
@@ -117,42 +175,35 @@ export async function createUser(email: string, password: string, name?: string)
 
 export async function authenticateUser(email: string, password: string): Promise<AuthResponse> {
   try {
-    // Get user with password for verification
-    const userWithPassword = await prisma.profile.findUnique({
-      where: { email },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        password: true,
-        createdAt: true,
-        updatedAt: true,
-      }
+    const supabase = createClient()
+    
+    // Sign in with Supabase Auth
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
     })
 
-    if (!userWithPassword || !userWithPassword.password) {
+    if (authError) {
       return {
         success: false,
         message: 'Invalid email or password'
       }
     }
 
-    // Verify password
-    const isValidPassword = await verifyPassword(password, userWithPassword.password)
-    if (!isValidPassword) {
+    if (!authData.user) {
       return {
         success: false,
-        message: 'Invalid email or password'
+        message: 'Authentication failed'
       }
     }
 
-    // Return user without password
-    const user = {
-      id: userWithPassword.id,
-      email: userWithPassword.email,
-      name: userWithPassword.name,
-      createdAt: userWithPassword.createdAt,
-      updatedAt: userWithPassword.updatedAt,
+    // Get user profile
+    const user = await getUserById(authData.user.id)
+    if (!user) {
+      return {
+        success: false,
+        message: 'User profile not found'
+      }
     }
 
     const token = generateToken(user.id)
