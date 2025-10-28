@@ -4,8 +4,8 @@
 Boppel is a comprehensive dual-sided marketplace platform connecting artisan creators with buyers. It goes beyond simple e-commerce to provide a holistic ecosystem for creative businesses, including business management tools, wellness features, sustainability initiatives, and community building.
 
 ## Core Technology Stack
-- **Framework**: Next.js 14+ (App Router)
-- **Frontend**: React 18 + TypeScript
+- **Framework**: Next.js 16+ (App Router)
+- **Frontend**: React 19 + TypeScript
 - **Styling**: Tailwind CSS with custom design system (semantic tokens)
 - **UI Components**: Shadcn/ui (Radix UI primitives)
 - **Routing**: Next.js App Router (file-based routing)

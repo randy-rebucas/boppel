@@ -42,7 +42,7 @@ export function verifyToken(token: string): { userId: string } | null {
 
 export async function getUserById(id: string): Promise<User | null> {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const { data: user, error } = await supabase
       .from('profiles')
       .select('id, email, name, created_at, updated_at')
@@ -68,7 +68,7 @@ export async function getUserById(id: string): Promise<User | null> {
 
 export async function getUserByEmail(email: string): Promise<User | null> {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const { data: user, error } = await supabase
       .from('profiles')
       .select('id, email, name, created_at, updated_at')
@@ -94,7 +94,7 @@ export async function getUserByEmail(email: string): Promise<User | null> {
 
 export async function createUser(email: string, password: string, name?: string): Promise<AuthResponse> {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     
     // Check if user already exists
     const existingUser = await getUserByEmail(email)
@@ -151,7 +151,7 @@ export async function createUser(email: string, password: string, name?: string)
 
     const user = {
       id: authData.user.id,
-      email: authData.user.email,
+      email: authData.user.email || null,
       name: name || null,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -175,7 +175,7 @@ export async function createUser(email: string, password: string, name?: string)
 
 export async function authenticateUser(email: string, password: string): Promise<AuthResponse> {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     
     // Sign in with Supabase Auth
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
