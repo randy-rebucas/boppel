@@ -3,14 +3,17 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Search, ShoppingCart, Heart } from 'lucide-react';
+import { Menu, X, Search, ShoppingCart, Heart, ChevronDown } from 'lucide-react';
+import MegaMenu from './MegaMenu';
+import MobileNav from './MobileNav';
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const pathname = usePathname();
 
   const primaryNavigation = [
-    { name: 'Explore', href: '/explore' },
+    { name: 'Explore', href: '/explore', hasMegaMenu: true },
     { name: 'Makers', href: '/community/creators' },
     { name: 'Sell', href: '/auth/get-started' },
     { name: 'About', href: '/about' },
@@ -60,17 +63,29 @@ export default function Navigation() {
           {/* Primary Navigation - Centered */}
           <div className="hidden lg:flex lg:items-center lg:space-x-10">
             {primaryNavigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`text-base font-medium transition-all duration-300 font-body ${
-                  isActive(item.href)
-                    ? 'text-brand-primary border-b-2 border-brand-primary pb-1'
-                    : 'text-text-primary hover:text-brand-primary hover:border-b-2 hover:border-brand-primary/50 pb-1'
-                }`}
-              >
-                {item.name}
-              </Link>
+              <div key={item.name} className="relative">
+                <Link
+                  href={item.href}
+                  className={`text-base font-medium transition-all duration-300 font-body flex items-center ${
+                    isActive(item.href)
+                      ? 'text-brand-primary border-b-2 border-brand-primary pb-1'
+                      : 'text-text-primary hover:text-brand-primary hover:border-b-2 hover:border-brand-primary/50 pb-1'
+                  }`}
+                  onMouseEnter={() => item.hasMegaMenu && setIsMegaMenuOpen(true)}
+                  onMouseLeave={() => item.hasMegaMenu && setIsMegaMenuOpen(false)}
+                >
+                  {item.name}
+                  {item.hasMegaMenu && (
+                    <ChevronDown className="w-4 h-4 ml-1" />
+                  )}
+                </Link>
+                {item.hasMegaMenu && (
+                  <MegaMenu 
+                    isOpen={isMegaMenuOpen} 
+                    onClose={() => setIsMegaMenuOpen(false)} 
+                  />
+                )}
+              </div>
             ))}
           </div>
 
@@ -147,40 +162,7 @@ export default function Navigation() {
         </div>
 
         {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="lg:hidden border-t border-border-primary bg-gradient-to-b from-background-primary to-background-secondary">
-            <div className="px-4 pt-4 pb-6 space-y-2">
-              {primaryNavigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`block px-4 py-3 text-base font-medium transition-all duration-300 font-body rounded-xl ${
-                    isActive(item.href)
-                      ? 'text-brand-primary bg-brand-primary/10'
-                      : 'text-text-primary hover:text-brand-primary hover:bg-brand-primary/5'
-                  }`}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
-              <div className="pt-6 border-t border-border-primary">
-                <div className="space-y-2">
-                  {secondaryNavigation.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className="block px-4 py-2 text-sm text-text-secondary hover:text-text-primary transition-all duration-300 font-body hover:bg-brand-primary/5 rounded-lg"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        <MobileNav isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       </div>
     </nav>
   );

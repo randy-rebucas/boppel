@@ -2,47 +2,33 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Search, Heart, ShoppingCart, Tag, Link as LinkIcon, Shield, Star, Sparkles, CheckCircle, Circle } from 'lucide-react';
 import Navigation from '@/components/Navigation';
+import HeroSection from '@/components/HeroSection';
+import FeaturedCreators from '@/components/FeaturedCreators';
+import HowItWorks from '@/components/HowItWorks';
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background-primary">
       <Navigation />
       
-      {/* Hero Section - BOPPEL ATELIER */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-background-primary via-background-secondary to-background-tertiary">
-        {/* Elegant gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/5 via-brand-secondary/5 to-brand-accent/5"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-background-primary/80 via-transparent to-transparent"></div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-          <div className="max-w-5xl">
-            <h2 className="text-sm font-medium text-text-tertiary uppercase tracking-wider mb-6 font-body">
-              BOPPEL ATELIER
-            </h2>
-            <h1 className="text-display-2xl text-text-primary mb-8 leading-tight">
-              Where Craftsmanship Meets Elegance
-            </h1>
-            <p className="text-body-lg text-text-secondary mb-10 max-w-3xl leading-relaxed">
-              A sophisticated marketplace celebrating authentic artisans and their exceptional creations. 
-              No commissions, no copycats—just genuine makers and their masterpieces.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6">
-              <Link
-                href="/auth/get-started"
-                className="btn-elegant text-lg"
-              >
-                Join as Artisan
-              </Link>
-              <Link
-                href="/explore"
-                className="btn-secondary text-lg"
-              >
-                Discover Handcrafted Treasures
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection
+        subtitle="BOPPEL ATELIER"
+        title="Where Craftsmanship Meets Elegance"
+        description="A sophisticated marketplace celebrating authentic artisans and their exceptional creations. No commissions, no copycats—just genuine makers and their masterpieces."
+        primaryCta={{
+          text: "Join as Artisan",
+          href: "/auth/get-started"
+        }}
+        secondaryCta={{
+          text: "Discover Handcrafted Treasures",
+          href: "/explore"
+        }}
+        features={[
+          "Free to join",
+          "No commitment",
+          "Early access"
+        ]}
+      />
 
       {/* Why Choose Boppel Atelier Section */}
       <section className="py-24 bg-gradient-to-b from-background-primary to-background-secondary">
@@ -141,129 +127,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* How Boppel Works Section */}
-      <section className="py-24 bg-background-primary">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-8">
-              How Boppel Works
-            </h2>
-          </div>
+      <HowItWorks />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-brand-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Sparkles className="w-8 h-8 text-brand-primary" />
-              </div>
-              <h3 className="text-xl font-bold text-text-primary mb-4">Create or Discover</h3>
-              <p className="text-text-secondary leading-relaxed">
-                Whether you're a creator looking to sell or a buyer seeking unique items, Boppel connects you with authentic handmade and digital creations.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-brand-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle className="w-8 h-8 text-brand-primary" />
-              </div>
-              <h3 className="text-xl font-bold text-text-primary mb-4">Quality Verified</h3>
-              <p className="text-text-secondary leading-relaxed">
-                Every creator and product is carefully vetted to ensure authenticity and quality. We maintain high standards for our community.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-brand-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Heart className="w-8 h-8 text-brand-primary" />
-              </div>
-              <h3 className="text-xl font-bold text-text-primary mb-4">Support Creators</h3>
-              <p className="text-text-secondary leading-relaxed">
-                When you buy on Boppel, you're directly supporting the artist. No middlemen, no hidden fees - just fair compensation for creators.
-              </p>
-            </div>
-          </div>
-
-          <div className="text-center">
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/platform/keep-more"
-                className="btn-primary"
-              >
-                See How It Works
-              </Link>
-              <Link
-                href="/community"
-                className="btn-secondary"
-              >
-                Join the Community
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Artisans Section */}
-      <section className="py-24 bg-gradient-to-b from-background-primary to-background-secondary">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <h3 className="text-sm font-medium text-text-tertiary uppercase tracking-wider mb-6 font-body">
-              ARTISAN COLLECTIVE
-            </h3>
-            <h2 className="text-display-xl text-text-primary mb-6">
-              Featured Artisans
-            </h2>
-            <p className="text-body-lg text-text-secondary max-w-3xl mx-auto">
-              Discover exceptional craftspeople who bring artistry, intention, and mastery to every creation.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            <div className="card-sophisticated group hover:shadow-elevated transition-all duration-300">
-              <div className="aspect-square bg-gradient-to-br from-brand-primary/10 via-brand-secondary/10 to-brand-accent/10 rounded-xl mb-6 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                <div className="w-28 h-28 bg-gradient-to-br from-brand-primary/20 to-brand-accent/20 rounded-full flex items-center justify-center">
-                  <Circle className="w-14 h-14 text-brand-primary" />
-                </div>
-              </div>
-              <div className="text-xs font-medium text-text-tertiary uppercase tracking-wider mb-3 font-body">
-                CERAMICS & POTTERY
-              </div>
-              <h3 className="text-display-sm text-text-primary mb-4">Elena Stone</h3>
-              <p className="text-body-sm text-text-secondary leading-relaxed">
-                Hand-thrown ceramics inspired by nature's organic forms, each piece a unique testament to traditional pottery techniques and contemporary design.
-              </p>
-            </div>
-
-            <div className="card-sophisticated group hover:shadow-elevated transition-all duration-300">
-              <div className="aspect-square bg-gradient-to-br from-brand-secondary/10 via-brand-accent/10 to-brand-primary/10 rounded-xl mb-6 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                <div className="w-28 h-28 bg-gradient-to-br from-brand-secondary/20 to-brand-primary/20 rounded-full flex items-center justify-center">
-                  <Circle className="w-14 h-14 text-brand-secondary" />
-                </div>
-              </div>
-              <div className="text-xs font-medium text-text-tertiary uppercase tracking-wider mb-3 font-body">
-                TEXTILES & WEAVING
-              </div>
-              <h3 className="text-display-sm text-text-primary mb-4">Maria Rodriguez</h3>
-              <p className="text-body-sm text-text-secondary leading-relaxed">
-                Sustainable woven textiles using traditional techniques and eco-friendly materials, creating pieces that honor heritage while embracing modern sensibilities.
-              </p>
-            </div>
-
-            <div className="card-sophisticated group hover:shadow-elevated transition-all duration-300">
-              <div className="aspect-square bg-gradient-to-br from-brand-accent/10 via-brand-primary/10 to-brand-secondary/10 rounded-xl mb-6 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                <div className="w-28 h-28 bg-gradient-to-br from-brand-accent/20 to-brand-secondary/20 rounded-full flex items-center justify-center">
-                  <Circle className="w-14 h-14 text-brand-accent" />
-                </div>
-              </div>
-              <div className="text-xs font-medium text-text-tertiary uppercase tracking-wider mb-3 font-body">
-                LEATHER CRAFT
-              </div>
-              <h3 className="text-display-sm text-text-primary mb-4">James Chen</h3>
-              <p className="text-body-sm text-text-secondary leading-relaxed">
-                Handcrafted leather goods with meticulous attention to detail and timeless design principles, creating heirloom-quality pieces for the discerning collector.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <FeaturedCreators />
 
       {/* Testimonial Section */}
       <section className="py-24 bg-gradient-to-b from-background-secondary to-background-primary">

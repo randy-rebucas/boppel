@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/components/auth-provider";
+import { QueryProvider } from "@/components/query-provider";
 
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-display",
@@ -98,9 +99,11 @@ export default function RootLayout({
       <body
         className={`${cormorantGaramond.variable} ${inter.variable} ${geistMono.variable} antialiased min-h-screen bg-background-primary text-text-primary`}
       >
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <QueryProvider>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </QueryProvider>
       </body>
     </html>
   );
